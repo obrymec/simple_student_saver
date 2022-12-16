@@ -1,0 +1,17 @@
+{
+	"name": "simple-student-saver",
+	"version": "0.1.6",
+	"description": "A simple student data saver.",
+	"main": "./app.js",
+	"scripts": {
+		"start": "nodemon ./app.js"
+	},
+	"author": "Obrymec",
+	"license": "MIT",
+	"dependencies": {
+		"better-sqlite3": "^7.4.3",
+		"body-parser": "^1.19.0",
+		"express": "^4.17.1",
+		"nodemon": "^2.0.20"
+	}
+}
