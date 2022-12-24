@@ -39,7 +39,7 @@ git clone git@github.com:obrymec/Simple-Student-Saver.git simple-student-saver/
 ### <u>Install project dependencies</u>:
 Go to the root folder of the project and run:
 ```sh
-npm install
+npm install;\
 npm audit fix
 ```
 
