@@ -48,7 +48,7 @@ Go to the root folder of the project and run:
 ```sh
 npm start
 ```
-Go to your favorite browser and tap on the search bar the following link:
+Go to your favorite browser and tap on the search bar, the following link:
 ```sh
 http://localhost:5000/
 ```
