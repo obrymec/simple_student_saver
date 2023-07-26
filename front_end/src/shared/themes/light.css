@@ -1,0 +1,7 @@
+/*Colors theme*/
+:root {
+  --body-bg-color: rgb(245, 245, 245);
+  --primary-color: steelblue;
+  --shadow-color: black;
+  --focus-color: #fff;
+}

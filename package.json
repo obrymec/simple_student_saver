@@ -1,13 +1,13 @@
 {
-	"name": "simple-student-saver",
-	"version": "0.1.6",
 	"description": "A simple student data saver.",
-	"main": "./app.js",
-	"scripts": {
-		"start": "nodemon ./app.js"
-	},
+	"name": "simple-student-saver",
+	"main": "./back_end/server.js",
 	"author": "Obrymec",
+	"version": "0.1.6",
 	"license": "MIT",
+	"scripts": {
+		"start": "nodemon ./back_end/server.js"
+	},
 	"dependencies": {
 		"better-sqlite3": "^7.4.3",
 		"body-parser": "^1.19.0",
