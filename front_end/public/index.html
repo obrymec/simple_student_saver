@@ -1,39 +1,41 @@
 <!--
-	@project: Simple Student Saver - https://www.google.com
+	@project: Simple Student Saver - https://obrymec.github.io/simple_student_saver
 	@author: Obrymec - obrymecsprinces@gmail.com
 	@fileoverview: The main html structure.
 	@supported: DESKTOP, MOBILE
 	@created: 2021-11-19
-	@updated: 2023-07-25
+	@updated: 2023-10-29
 	@file: index.html
-	@version: 1.0.0
+	@version: 1.0.1
 -->
 
-<!--Student save app-->
+<!--Student saver app-->
 <!Doctype html>
-	<!--Saver web app structure-->
-	<html lang = "fr">
-		<!--Saver web app header-->
+	<!--Html structure-->
+	<html lang = "en">
+		<!--Header-->
 		<head>
-			<!--Web page encoding: "UTF-8"-->
-			<meta charset = "utf-8"/>
-			<!--Web page title--> 
-			<title>
-				Simple Student Saver
-			</title>
-			<!--Loads the stylesheet-->
+			<!--Web page title-->
+			<title>Simple Student Saver</title>
+			<!--Loads stylesheet-->
 			<link
-				href = "./style.css"
+				href = "./front_end/public/style.css"
 				rel = "stylesheet"
+			/>
+			<!--Encoding: "UTF-8"-->
+			<meta
+				content = "width=device-width, initial-scale=1"
+				name = "viewport"
+				charset = "utf-8"
 			/>
 			<!--App favicon-->
 			<link
-				ref = "../../favicon.ico"
+				ref = "./favicon.ico"
 				rel = "shortcut icon"
 				type = "image/ico"
 			/>
 			<link
-				href = "../../favicon.ico"
+				href = "./favicon.ico"
 				type = "image/ico"
 				rel = "icon"
 			/>
@@ -41,26 +43,46 @@
 		<!--Global container-->
 		<body>
 			<!--Global header-->
-			<header class = "header"></header>
+			<header class = "header">
+				<!--Header text title-->
+				<div class = "title-zone">
+					<span></span>
+				</div>
+				<!--Back button-->
+				<div
+					title = "Comeback to student sign up ?"
+					class = "icon-zone"
+				>
+					<!--Vector icon-->
+					<svg
+						viewBox = "0 0 48 48"
+						id = "back-btn"
+						height = "24px"
+						width = "24px"
+					>
+						<path d = "M0 0h48v48h-48z" fill = "none"/>
+						<path
+							d = "M40 22h-24.34l11.17-11.17-2.83-2.83-16 
+							16 16 16 2.83-2.83-11.17-11.17h24.34v-4z"
+						/>
+					</svg>
+				</div>
+			</header>
 			<!--Global content-->
 			<main class = "content"></main>
-			<!--Library dependencies-->
+			<!--External dependencies-->
 			<script
-				src = "../src/shared/utils/jquery.js"
-				type = "text/javascript"
-			></script>
-			<!--Custom dependencies-->
-			<script
-				src = "../src/shared/utils/std.js"
+				src = "./front_end/src/utils/toastify.js"
 				type = "text/javascript"
 			></script>
 			<script
-				src = "../src/shared/utils/string.js"
+				src = "./front_end/src/utils/jquery.js"
 				type = "text/javascript"
 			></script>
+			<!--Controller-->
 			<script
-				src = "../src/shared/utils/anim.js"
-				type = "text/javascript"
+				src = "./front_end/src/main.js"
+				type = "module"
 			></script>
 		</body>
 	</html>

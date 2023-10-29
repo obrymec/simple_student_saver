@@ -1,51 +1,254 @@
-/*Back button container design*/
-div.global-header > div.icon-zone svg {
-  transform: translateY(3px);
+/**
+* @project: Simple Student Saver - https://obrymec.github.io/simple_student_saver
+* @fileoverview: The main stylesheet of application.
+* @author: Obrymec - obrymecsprinces@gmail.com
+* @supported: DESKTOP, MOBILE
+* @created: 2023-06-16
+* @updated: 2023-10-29
+* @file: style.css
+* @version: 0.0.3
+*/
+
+/* Colors theme */
+:root {
+  --body-bg-color: rgb(245, 245, 245);
+  --white-700: rgb(230, 230, 230);
+  --white-800: rgb(248, 244, 244);
+  --gray-100: rgb(180, 180, 180);
+  --secondary-color: slateblue;
+  --primary-color: steelblue;
+  --silver-color: silver;
+  --shadow-color: black;
+  --text-color: #646464;
+  --white-color: #fff;
+  --error-color: red;
+  --gray-color: gray;
 }
 
-/*Title zone design*/
-div.title-zone {
-  width: 100%;
+/* Animations */
+@keyframes translate {
+  from {
+    transform: translateY(-120%);
+  } to {
+    transform: translateY(0);
+  }
+}
+@keyframes redBloom {
+  from {
+    text-shadow: 0 0 10px red;
+  } to {
+    text-shadow: 0 0 5px red;
+  }
+}
+@keyframes fadeout {
+  from {
+    opacity: 0;
+  } to {
+    opacity: 1;
+  }
+}
+@keyframes options_show {
+  from {
+    transform: translateY(-52px);
+    opacity: 0;
+  } to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+@keyframes scale {
+  from {
+    opacity: 0;
+    width: 0;
+  } to {
+    width: 250px;
+    opacity: 1;
+  }
 }
 
-/*Basic label design*/
-label {
-  letter-spacing: 1.5px;
-  user-select: none;
-}
+/* Toastify */
+.toastify{padding:12px 20px;color:#fff;display:inline-block;box-shadow:0 3px 6px -1px rgba(0,0,0,.12),0 10px 36px -4px rgba(77,96,232,.3);background:-webkit-linear-gradient(315deg,#73a5ff,#5477f5);background:linear-gradient(135deg,#73a5ff,#5477f5);position:fixed;opacity:0;transition:all .4s cubic-bezier(.215, .61, .355, 1);border-radius:2px;cursor:pointer;text-decoration:none;max-width:calc(50% - 20px);z-index:2147483647}.toastify.on{opacity:1}.toast-close{background:0 0;border:0;color:#fff;cursor:pointer;font-family:inherit;font-size:1em;opacity:.4;padding:0 5px}.toastify-right{right:15px}.toastify-left{left:15px}.toastify-top{top:-150px}.toastify-bottom{bottom:-150px}.toastify-rounded{border-radius:25px}.toastify-avatar{width:1.5em;height:1.5em;margin:-7px 5px;border-radius:2px}.toastify-center{margin-left:auto;margin-right:auto;left:0;right:0;max-width:fit-content;max-width:-moz-fit-content}@media only screen and (max-width:360px){.toastify-left,.toastify-right{margin-left:auto;margin-right:auto;left:0;right:0;max-width:fit-content}}
 
-/*Back arrow button design*/
-svg#back-btn {
-  fill: var(--focus-color);
-  cursor: pointer;
-}
-
-/*Body basic design*/
-body {
+/* All tags */
+* {
+  font-family: Verdana, Geneva, Tahoma, sans-serif, Arial;
   background-color: var(--body-bg-color);
+  transition: all .2s linear;
+  color: var(--text-color);
+  user-select: none;
+  font-size: 16px;
   padding: 0;
   margin: 0;
 }
 
-/*Sign up text title*/
-div.global-header > div.title-zone label {
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
-  color: var(--focus-color);
+/* Hover */
+div.data:hover {
+  background-color: var(--white-700) !important;
+}
+
+/* Student data attributes */
+div.data > div.attributes {
+  padding-right: 25px;
+}
+
+/* Title zone */
+header > div.title-zone {
+  width: 100%;
+}
+
+/* Formulary title */
+div.title > span {
+  text-shadow: 0 0 3px var(--primary-color);
+  font-size: 22px;
+}
+
+/* Text title */
+header > div.title-zone > span {
   font-weight: bold;
   font-size: 1rem;
 }
 
-/*Global header view design*/
-div.global-header {
+/* Input hover */
+input[type="button"]:hover {
+  transition: background-color, box-shadow 500ms;
+  box-shadow: 0 0 2px 2px var(--secondary-color);
+  background-color: var(--secondary-color);
+}
+
+/* Back arrow button */
+header > div.icon-zone > svg {
+  transform: translateY(3px);
+  fill: var(--white-color);
+  cursor: pointer;
+}
+
+/* No data text */
+div.no-data-zone > span {
+  color: var(--gray-100); 
+  text-align: center;
+  font-size: 18px;
+}
+
+/* Any field container */
+div.field-zone {
+  position: relative;
+  width: 300px;
+  z-index: 1;
+}
+
+/* Options */
+div.options {
+  transform: translateY(-52px);
+  position: relative;
+  z-index: 0;
+  opacity: 0;
+}
+
+/* Error 404 text */
+h1#error-404-text {
+  animation: 800ms redBloom 800ms forwards;
+  text-shadow: 0 0 5px var(--error-color);
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  font-size: 55px;
+}
+
+/* Error text */
+span#field-error {
+  color: var(--error-color);
+  margin-bottom: 15px;
+  margin-left: 10px;
+  text-align: left;
+  font-size: 12px;
+  margin-top: 8px;
+  display: block;
+}
+
+/* No data zone */
+div.no-data-zone {
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  display: none;
+  z-index: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  top: 0;
+}
+
+/* Input fields */
+input.field {
+  box-shadow: 0 0 2px 2px var(--silver-color);
+  border: 1px solid var(--silver-color);
+  color: var(--primary-color);
+  padding: 2px 15px 2px 15px;
+  letter-spacing: 1.5px;
+  border-radius: 30px;
+  outline: none;
+  height: 30px;
+  opacity: 0;
+  width: 0;
+}
+
+/* Any student data */
+div.data {
+  box-shadow: 0 0 3px var(--gray-color);
+  background-color: var(--white-color);
+  padding: 10px 15px 10px 15px;
+  justify-content: stretch;
+  align-items: center;
+  margin-right: 15px;
+  border-radius: 5px;
+  margin-left: 15px;
+  display: flex;
+  opacity: 0;
+}
+
+/* Global header view */
+header {
   box-shadow: 0 0 5px var(--shadow-color);
   background-color: var(--primary-color);
   transform: translateY(-120%);
   padding: 3px 10px 5px 10px;
   justify-content: stretch;
+  display: inline-flex;
   align-items: center;
   position: fixed;
-  display: flex;
   z-index: 1;
+  right: 0;
+  left: 0;
+  top: 0;
+}
+
+/* Button form */
+input[type="button"] {
+  box-shadow: 0 0 1px 1px var(--silver-color);
+  background-color: var(--primary-color);
+  border: 1px solid var(--white-color);
+  color: var(--white-color);
+  display: inline-block;
+  padding: 5px 0 6px 0;
+  border-radius: 35px;
+  font-size: 14px;
+  cursor: pointer;
+  outline: none;
+  width: 140px;
+  height: 35px;
+}
+
+/* 404 page error */
+section.error-404 {
+  background-color: var(--white-800);
+  color: var(--text-color);
+  justify-content: center;
+  letter-spacing: 1.5px;
+  align-items: center;
+  padding-right: 15px;
+  padding-left: 15px;
+  position: fixed;
+  display: flex;
+  bottom: 0;
   right: 0;
   left: 0;
   top: 0;

@@ -1,0 +1,97 @@
+<!--
+	@project: Simple Student Saver - https://obrymec.github.io/simple_student_saver
+	@fileoverview: The student sign up html structure.
+	@author: Obrymec - obrymecsprinces@gmail.com
+	@supported: DESKTOP, MOBILE
+	@created: 2021-11-19
+	@updated: 2023-10-29
+	@file: sign_up.html
+	@version: 1.0.1
+-->
+<body>
+	<br/><br/><br/><br/><br/>
+	<br/><br/><br/><br/><br/>
+	<br/>
+	<!--Sign up global container-->
+	<div
+		class = "sign-up"
+		align = "center"
+	>
+		<!--Title-->
+		<div class = "title">
+			<span></span>
+		</div><br/>
+		<!--First name zone-->
+		<div
+			class = "firstname-zone field-zone"
+		>
+			<!--First name field-->
+			<input
+				title = "Put your first name."
+				placeholder = "FirstName"
+				id = "firstname"
+				class = "field"
+				type = "text"
+			/>
+			<!--Error message-->
+			<span
+				id = "field-error"
+			></span>
+		</div>
+		<!--Last name zone-->
+		<div
+			class = "lastname-zone field-zone"
+		>
+			<!--Last name filled-->
+			<input
+				title = "Write your family name."
+				placeholder = "LastName"
+				id = "lastname"
+				class = "field"
+				type = "text"
+			/>
+			<!--Error message-->
+			<span
+				id = "field-error"
+			></span>
+		</div>
+		<!--Phone number zone-->
+		<div
+			class = "phone-number-zone field-zone"
+		>
+			<!--Phone number field-->
+			<input
+				title = "Give your phone number."
+				placeholder = "XX XX XX XX"
+				class = "field"
+				type = "number"
+				id = "phone"
+				min = '0'
+			/>
+			<!--Error message-->
+			<span
+				id = "field-error"
+			></span>
+		</div>
+		<!--Options-->
+		<div class = "options">
+			<!--See students-->
+			<input
+				title = "Load all student(s)."
+				type = "button"
+				value = "Load"
+			/>
+			<!--Sign up-->
+			<input
+				title = "Save this student."
+				type = "button"
+				value = "Save"
+			/>
+		</div>
+	</div>
+	<!--Controller-->
+	<script
+		src = "./front_end/src/features/add_student/sign_up.js"
+		type = "module"
+	></script>
+</body>

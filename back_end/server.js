@@ -1,13 +1,12 @@
 /**
-* @project Simple Student Saver - https://www.google.com
-* @fileoverview Defines routes, paths and nodejs
-* 	server configurations with expressjs.
+* @project Simple Student Saver - https://obrymec.github.io/simple_student_saver
+* @fileoverview Defines routes, paths and nodejs server configs with expressjs.
 * @author Obrymec - obrymecsprinces@gmail.com
 * @supported DESKTOP, MOBILE
 * @created 2021-11-19
-* @updated 2023-07-25
+* @updated 2023-10-29
 * @file server.js
-* @version 1.0.0
+* @version 1.0.1
 */
 
 // Plugin dependencies.
@@ -19,78 +18,75 @@ const express = require ("express");
 const signUp = require ("./sign_up.js");
 	
 // Attributes.
-const port = (process?.env?.PORT || 5000);
+const port = (process.env.PORT || 5000);
+const options = {root: __dirname};
 const app = express ();
-const options = {
-	root: `${__dirname}/front_end/public`
-};
 const db = new sqlite (
-	"../store/database.db",
-	{
+	"./database.db", {
 		verbose: console.log
 	}
 );
 
 // Configurations.
-app?.use (express?.static (options.root));
-app?.use (parser?.json ());
-app?.use (
-	parser?.urlencoded ({
+app.use (express.static (options.root));
+app.use (parser.json ());
+app.use (
+	parser.urlencoded ({
 		extended: true
 	})
 );
 
 // Home page.
-app?.get (
+app.get (
 	'/',
-	(_, res) => res?.sendFile (
+	(_, res) => res.sendFile (
 		"./front_end/public/index.html",
 		options
 	)
 );
 
 // Sends the sign up page.
-app?.get (
+app.get (
 	"/sign-up",
-	(_, res) => res?.sendFile (
+	(_, res) => res.sendFile (
 		"./front_end/public/index.html",
 		options
 	)
 );
 
 // Sends student(s) page.
-app?.get (
+app.get (
 	"/students",
-	(_, res) => res?.sendFile (
+	(_, res) => res.sendFile (
 		"./front_end/public/index.html",
 		options
 	)
 );
 
 // Sends student(s) data.
-app?.post (
+app.post (
 	"/students-data",
-	(_, res) => res?.send (
-		db?.prepare (
+	(_, res) => res.send (
+		db.prepare (
 			"SELECT * FROM Students;"
-		)?.all ()
+		).all ()
 	)
 );
 
 // Adds student to database.
-app?.post (
+app.post (
 	"/data",
 	(req, res) => (
 		signUp.addStudent (
-			req?.body, db, res
+			req.body, db, res
 		)
 	)
 );
 
 // A unknown link.
-app?.get (
+app.get (
 	"/*",
-	(_, res) => res?.sendFile (
+	(_, res) => res.sendFile (
 		signUp.clearStr (`
 			./font_end/src/features
 			/page_not_found/error_404.html
@@ -100,23 +96,25 @@ app?.get (
 );
 
 // Starts the server.
-app?.listen (port, err => {
+app.listen (port, err => {
 	// Whether an error is thrown.
-	if (err) console.log (
-		"Server Error: ",
-		err
-	);
+	if (err) {
+		// Displays this error
+		// message.
+		console.error (
+			"Server Error: ", err
+		);
 	// Otherwise.
-	else {
+	} else {
 		// Creates the students table
 		// whether this's not defined.
-		db?.exec (
+		db.exec (
 			signUp.clearStr (`
 				CREATE TABLE IF NOT 
 				EXISTS Students (
-					'firstname' varchar,
-					'lastname' varchar,
-					'phoneNumber' integer,
+					'firstname' varchar, 
+					'lastname' varchar, 
+					'phoneNumber' integer, 
 					'id' integer PRIMARY KEY
 				);
 			`)
