@@ -4,7 +4,7 @@
 * @author Obrymec - obrymecsprinces@gmail.com
 * @supported DESKTOP, MOBILE
 * @created 2021-11-19
-* @updated 2023-10-29
+* @updated 2023-11-05
 * @file string.js
 * @version 1.0.1
 */
@@ -80,13 +80,3 @@ function capitalize (text) {
   // for other cases.
   return null;
 }
-
-/**
- * @description Exports
- *  all public features.
- * @exports *
- */
-export {
-  capitalize,
-  clearStr
-};

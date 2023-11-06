@@ -14,8 +14,8 @@
     "type": "git"
   },
 	"scripts": {
-		"dev": "nodemon ./back_end/server.js",
-		"start": "./back_end/server.js"
+		"dev": "nodemon ./server.js",
+		"start": "./server.js"
 	},
 	"dependencies": {
 		"better-sqlite3": "^7.4.3",

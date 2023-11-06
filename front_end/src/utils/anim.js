@@ -4,151 +4,308 @@
 * @author Obrymec - obrymecsprinces@gmail.com
 * @supported DESKTOP, MOBILE
 * @created 2021-11-19
-* @updated 2023-10-30
+* @updated 2023-11-05
 * @version 1.0.1
 * @file anim.js
 */
 
-// Custom dependencies.
-import {clearStr} from "./front_end/src/utils/string.js";
-import {isset} from "./front_end/src/utils/std.js";
-
 /**
- * @description Animates text characters.
+ * @description Animates text.
  * @param {{
  * 	onFinished?: ?Function=,
- * 	invert?: boolean=,
- * 	direction?: int=,
- * 	interval? Number,
- * 	parent: !Element,
- * 	delay?: Number=,
+ * 	reverse?: boolean=,
+ * 	target: !Element,
+ * 	interval?: int=,
  * 	text: !String
- * }} data The animation data. It
- * 	supports the following keys:
+ * }} data The animation data.
+ * 	It supports the following
+ * 	keys:
  *
- * 	- Element parent: The parent
- * 		tag of animation.
- *
- *  - String text: The text to
- * 		animate.
- *
- *  - Number interval: The time for
- * 		each character animation.
- *
- *  - Number delay: The time before
- *    start animation.
- *
- *  - boolean invert: Whether the
- * 		animation must be executed
- * 		in reversed mode.
- *
- *  - Function onFinished: Called
+ * 	- Function onFinished: Called
  * 		when animation is over.
  *
- * 	- int direction: The animation's
- * 		direction.
+ * 	- Element target: The element
+ * 		where his text content will
+ * 		be animated.
+ *
+ * 	- String text: The text to
+ * 		get animation.
+ *
+ * 	- int interval: The timeout
+ * 		between each character
+ * 		draw.
+ *
+ * 	- boolean reverse: Whether
+ * 		we want to reverse the
+ * 		previous animation.
  * @fires animateText#onFinished
  * @function animateText
- * @public
  * @returns {void} void
  */
 function animateText ({
 	onFinished = null,
-	invert = false,
-	direction = 1,
-	delay = 0,
-	interval,
-	parent,
+	reverse = false,
+	interval = 25,
+	target,
 	text
 }) {
-  // Whether required parameters
-	// are valid.
-  if (
-		!isset (parent) &&
-		!isset (text)
-	) {
-		// Clears parent's html
-		// content.
-		parent.innerHTML = '';
-		// Clears parent's text
-		// content.
-		parent.innerText = '';
-		// The time before start
-		// animation.
-		let timeout = delay;
-		// The index start value.
-		const start = (
-			direction > 0 ? 0 :
-			(text.length - 1)
+	// Animates the passed text.
+	const anim = new Typewriter (
+		target, {
+			delay: interval,
+			cursor: ''
+		}
+	);
+	// Whether animation is normal.
+	if (!reverse) {
+		// Writes the given string.
+		anim.typeString (text);
+		// Starts the process.
+		anim.start ();
+	// Otherwise.
+	} else {
+		// Sets the target tag
+		// text content.
+		target.textContent = (
+			text
 		);
-		// Drawing characters.
-		for (
-			let j = start;
-			(
-				direction > 0 ?
-				j < text.length
-				: j >= 0
-			);
-			j += direction
+		// Backspaces written
+		// characters.
+		backspace ({
+			tag: target,
+			interval
+		});
+	}
+	// Waits for animation
+	// get over.
+	window.setTimeout (() => {
+		// Whether `finished`
+		// event is listening.
+		if (
+			typeof onFinished
+				=== "function"
 		) {
-			// Creates the current
-			// character.
-			const char = (
-				document.createElement (
-					"label"
-				)
-			);
-			// Sets character text.
-			char.innerText = text[j];
-			// Configures animation
-			// direction.
-			char.style.animationDirection = (
-				!invert ? "normal" : "reverse"
-			);
-			// Sets character opacity
-			char.style.opacity = (
-				!invert ? 0 : 1
-			);
-			// Animates character.
-			char.style.animation = (
-				clearStr (`
-					${interval}ms fadeout 
-					${timeout}ms forwards
-				`)
-			);
-			// Sets animation direction.
-			(
-				direction > 0 ?
-				parent.appendChild (char) :
-				parent.prepend (char)
-			);
-			// Computes the timeout
-			// before animate the
-			// next character.
-			timeout += interval;
+			/**
+			 * @description Throws `finished`
+			 *  event.
+			 * @event animateText#finish
+			 * @readonly
+			 * @emits
+			 */
+			onFinished ();
 		}
-		// Animation is over.
-		if (!isset (onFinished)) {
-			// Waits for process
-			// time execution.
-			window.setTimeout (
-				() => onFinished (),
-				(
-					delay + (
-						text.length
-						* interval
-					)
+	}, (interval * text.length));
+}
+
+/**
+ * @description Hides and shows
+ *  the title bar.
+ * @param {boolean} visible If
+ *  we want to show or hide
+ *  the title bar.
+ * @param {?Function=} finish
+ *  Called when the title bar
+ * 	animation is over.
+ * @fires setTitleBarVisibility#finish
+ * @function setTitleBarVisibility
+ * @public
+ * @returns {void} void
+ */
+function setTitleBarVisibility (
+  visible,
+  finish = null
+) {
+  // The global header tag ref.
+  const header = (
+    document.querySelector (
+      "header"
+    )
+  );
+  // Whether the visibility
+  // is set to `false`.
+  if (!visible) {
+    // Hides the title bar.
+    cssAnimation (
+      {
+        direction: "reverse",
+        name: "translate",
+        duration: 200,
+        ref: header,
+        finish
+      },
+      {
+        transform: (
+					"translateY(-120%)"
 				)
-			);
-		}
+      }
+    );
+  // Otherwise.
+  } else {
+    // Shows the title bar.
+    cssAnimation (
+      {
+        name: "translate",
+        duration: 200,
+        ref: header,
+        finish
+      },
+      {
+        transform: (
+					"translateY(0)"
+				)
+      }
+    );
   }
+}
+
+/**
+ * @description Backspaces all characters
+ *  of a text content from a given tag.
+ * @param {{
+ *  onBackspace?: Function (String),
+ *  onFinished?: Function (String),
+ *  invert?: boolean=,
+ *  interval?: int=,
+ *  tag: Element
+ * }} data The method data configurations.
+ *  It supports the following keys:
+ *
+ *  - int interval: The timeout between
+ *    each backspace.
+ *
+ *  - boolean invert: Whether we want to
+ *    reverse the backspace direction.
+ *
+ *  - Function onFinished: Called when
+ *    the backspace effect is over.
+ *
+ *  - Element tag: The target markup
+ *    that will be affected by the
+ *    effect.
+ *
+ *  - Function onBackspace: Called at
+ *    every time when a backspace is
+ *    made over tag's text content.
+ * @fires backspace#onBackspace
+ * @fires backspace#onFinished
+ * @function backspace
+ * @public
+ * @returns {int} int
+ */
+function backspace ({
+  onBackspace = null,
+  onFinished = null,
+  invert = false,
+  interval = 140,
+  tag = null
+}) {
+  // Backspacing characters.
+  const animation = (
+    window.setInterval (
+      () => {
+        // The current corrected
+        // tag's text content.
+        tag.textContent = (
+          clearStr (
+						tag.textContent
+					)
+        );
+        // The current text
+        // content size.
+        const size = (
+          tag.textContent
+            .length
+        );
+        // Whether the text
+        // length is bigger
+        // than one.
+        if (size > 1) {
+          // Whether direction
+          // is normal.
+          if (!invert) {
+            // Removes the first
+            // character.
+            tag.textContent = (
+              tag.textContent
+                .split ('')
+                .slice (1, size)
+                .join ('')
+            );
+          // Otherwise.
+          } else {
+            // Removes the last
+            // character.
+            tag.textContent = (
+              tag.textContent
+                .split ('')
+                .slice (
+                  0, (size - 1)
+                ).join ('')
+            );
+          }
+          // Whether `onBackspace`
+          // event is listening.
+          if (
+            typeof onBackspace
+              === "function"
+          ) {
+            /**
+             * @description Throws
+             *  `onBackspace` event.
+             * @property {String} rest
+             *  The rest of backspaced
+             *  text.
+             * @event backspace#onBackspace
+             * @readonly
+             * @emits
+             */
+            onBackspace (
+              tag.textContent
+            );
+          }
+        // Otherwise.
+        } else {
+          // Clears text content.
+          tag.textContent = '';
+          // Kills animation.
+          window.clearInterval (
+            animation
+          );
+          // Whether `onFinished`
+          // event is listening.
+          if (
+            typeof onFinished
+              === "function"
+          ) {
+            /**
+             * @description Throws
+             *  `onFinished` event.
+             * @property {String} rest
+             *  The rest of backspaced
+             *  text.
+             * @event backspace#onFinished
+             * @readonly
+             * @emits
+             */
+            onFinished (
+              tag.textContent
+            );
+          }
+        }
+      },
+      interval
+    )
+  );
+  // Returns the process
+  // id.
+  return animation;
 }
 
 /**
  * @description Runs an existing css
  *	animation to a tag element.
  * @param {{
- * 	onFinished?: ?Function=,
+ * 	finish?: ?Function=,
  * 	direction?: String=,
  *	duration?: Number=,
  * 	fillmode? String=,
@@ -177,7 +334,7 @@ function animateText ({
  * 	- String easing: The animation
  *		easing.
  *
- * 	- Function onFinished: Called when
+ * 	- Function finish: Called when
  * 		animation is over.
  *
  * 	- String direction: The animation
@@ -192,110 +349,118 @@ function animateText ({
  *
  *	- String name: The animation name.
  * @param {Object<String, any>=} css
- *	 The css properties to animate.
+ *	The css properties to animate.
  * @fires cssAnimation#onFinished
  * @function cssAnimation
  * @public
  * @returns {void} void
  */
-function cssAnimation (data, css = {}) {
+function cssAnimation (
+	{
+		iteration,
+		direction,
+		duration,
+		fillmode,
+		finish,
+ 	 	easing,
+ 		state,
+ 	 	delay,
+ 	  unit,
+ 		name,
+	 	ref
+	},
+	css = {}
+) {
 	// Gets delay.
-	data.delay = (
-		!isset (data.delay) ?
-		parseFloat (data.delay)
+	delay = (
+		!isset (delay) ?
+		parseFloat (delay)
 		: 0.0
 	);
 	// Waits for the given delay.
 	window.setTimeout (() => {
 		// Gets iteration count.
-		data.iteration = (
-			!isset (data.iteration) ?
-			parseInt (data.iteration)
+		iteration = (
+			!isset (iteration) ?
+			parseInt (iteration)
 			: 1
 		);
 		// Gets name.
-		data.name = (
-			!isset (data.name) ?
-			data.name.trim ()
+		name = (
+			!isset (name) ?
+			name.trim ()
 			: null
 		);
-		// Whether constraints have
-		// been satisfied.
+		// Whether constraints
+		// have been satisfied.
 		if (
-			data.name !== null &&
-			!isset (data.ref) &&
-			data.iteration !== 0
+			name !== null &&
+			!isset (ref) &&
+			iteration !== 0
 		) {
 			// Gets duration.
-			data.duration = (
-				!isset (data.duration) ?
-				parseFloat (data.duration)
+			duration = (
+				!isset (duration) ?
+				parseFloat (duration)
 				: 0.0
 			);
 			// Gets direction.
-			data.direction = (
-				!isset (data.direction) ?
-				data.direction.trim () :
+			direction = (
+				!isset (direction) ?
+				direction.trim () :
 				"normal"
 			);
 			// Gets fill mode.
-			data.fillmode = (
-				!isset (data.fillmode) ?
-				data.fillmode.trim () :
+			fillmode = (
+				!isset (fillmode) ?
+				fillmode.trim () :
 				"forwards"
 			);
 			// Gets timing function.
-			data.easing = (
-				!isset (data.easing) ?
-				data.easing.trim () :
+			easing = (
+				!isset (easing) ?
+				easing.trim () :
 				"ease-in-out"
 			);
 			// Gets play state.
-			data.state = (
-				!isset (data.state) ?
-				data.state.trim () :
+			state = (
+				!isset (state) ?
+				state.trim () :
 				"running"
 			);
 			// Gets time unit.
-			data.unit = (
-				!isset (data.unit) ?
-				data.unit.trim () :
+			unit = (
+				!isset (unit) ?
+				unit.trim () :
 				"ms"
 			);
-			// Applies the configured
-			// css animation.
-			data.ref.style.animationTimingFunction = data.easing;
-			data.ref.style.animationDirection = data.direction;
-			data.ref.style.animationFillMode = data.fillmode;
-			data.ref.style.animationPlayState = data.state;
-			data.ref.style.animationName = data.name;
-			data.ref.style.animationDuration = (
-				data.duration + data.unit
+			// Applies the configured css animation.
+			ref.style.animationTimingFunction = easing;
+			ref.style.animationDirection = direction;
+			ref.style.animationFillMode = fillmode;
+			ref.style.animationPlayState = state;
+			ref.style.animationName = name;
+			ref.style.animationDuration = (
+				duration + unit
 			);
-			data.ref.style.animationIterationCount = (
-				(data.iteration < 0) ?
-				"infinite" : data.iteration
+			ref.style.animationIterationCount = (
+				(iteration < 0) ? "infinite" : iteration
 			);
-			// Whether animation is
-			// running.
-			if (
-				data.iteration > 0 &&
-				data.state === "running"
-			) {
+			// Whether animation is running.
+			if (iteration > 0 && state === "running") {
 				// Waiting for duration.
 				window.setTimeout (() => {
-					// Whether animation is
-					// running.
-					if (data.state === "running") {
+					// Whether animation is running.
+					if (state === "running") {
 						// Resets and clears data.
-						data.ref.style.animationIterationCount = "none";
-						data.ref.style.animationTimingFunction = "none";
-						data.ref.style.animationDirection = "none";
-						data.ref.style.animationPlayState = "none";
-						data.ref.style.animationDuration = "none";
-						data.ref.style.animationFillMode = "none";
-						data.ref.style.animationName = "none";
-						data.ref.style.animation = "none";
+						ref.style.animationIterationCount = "none";
+						ref.style.animationTimingFunction = "none";
+						ref.style.animationDirection = "none";
+						ref.style.animationPlayState = "none";
+						ref.style.animationDuration = "none";
+						ref.style.animationFillMode = "none";
+						ref.style.animationName = "none";
+						ref.style.animation = "none";
 						// Updating element css
 						// property(ies) with
 						// the passed data.
@@ -304,35 +469,25 @@ function cssAnimation (data, css = {}) {
 						) {
 							// Sets the current
 							// css property.
-							data.ref.style[prop] = css[prop];
+							ref.style[prop] = css[prop];
 						}
-						// Whether `finished`
-						// event is listening.
-						if (!isset (data.onFinished)) {
+						// Whether `finish` event
+						// is listening.
+						if (
+							typeof finish === "function"
+						) {
 							/**
-							 * @description Throws `finished`
+							 * @description Throws `finish`
 							 *  event.
-							 * @event cssAnimation#onFinished
+							 * @event cssAnimation#finish
 							 * @readonly
 							 * @emits
 							 */
-							data.onFinished ();
+							finish ();
 						}
 					}
-				}, (
-					data.duration * data.iteration
-				));
+				}, (duration * iteration));
 			}
 		}
-	}, data.delay);
+	}, delay);
 }
-
-/**
- * @description Exports
- *  all public features.
- * @exports *
- */
-export {
-	cssAnimation,
-	animateText
-};

@@ -4,7 +4,7 @@
 * @author Obrymec - obrymecsprinces@gmail.com
 * @supported DESKTOP, MOBILE
 * @created 2021-11-19
-* @updated 2023-10-29
+* @updated 2023-11-05
 * @file server.js
 * @version 1.0.1
 */
@@ -15,21 +15,26 @@ const parser = require ("body-parser");
 const express = require ("express");
 
 // Custom dependencies.
-const signUp = require ("./sign_up.js");
-	
+const api = require ("./back_end/api.js");
+
 // Attributes.
-const port = (process.env.PORT || 5000);
-const options = {root: __dirname};
 const app = express ();
+const port = (
+	process.env.PORT || 5000
+);
 const db = new sqlite (
-	"./database.db", {
+	"./back_end/database.db", {
 		verbose: console.log
 	}
 );
 
 // Configurations.
-app.use (express.static (options.root));
 app.use (parser.json ());
+app.use (
+	express.static (
+		__dirname
+	)
+);
 app.use (
 	parser.urlencoded ({
 		extended: true
@@ -40,8 +45,9 @@ app.use (
 app.get (
 	'/',
 	(_, res) => res.sendFile (
-		"./front_end/public/index.html",
-		options
+		`${
+			__dirname
+		}/front_end/public/index.html`,
 	)
 );
 
@@ -49,8 +55,9 @@ app.get (
 app.get (
 	"/sign-up",
 	(_, res) => res.sendFile (
-		"./front_end/public/index.html",
-		options
+		`${
+			__dirname
+		}/front_end/public/index.html`,
 	)
 );
 
@@ -58,8 +65,9 @@ app.get (
 app.get (
 	"/students",
 	(_, res) => res.sendFile (
-		"./front_end/public/index.html",
-		options
+		`${
+			__dirname
+		}/front_end/public/index.html`,
 	)
 );
 
@@ -77,21 +85,22 @@ app.post (
 app.post (
 	"/data",
 	(req, res) => (
-		signUp.addStudent (
+		api.addStudent (
 			req.body, db, res
 		)
 	)
 );
 
-// A unknown link.
+// Unknown link.
 app.get (
 	"/*",
 	(_, res) => res.sendFile (
-		signUp.clearStr (`
-			./font_end/src/features
-			/page_not_found/error_404.html
-		`, true),
-		options
+		api.clearStr (`
+			${__dirname}/front_end
+			/src/features
+			/page_not_found
+			/error_404.html
+		`, true)
 	)
 );
 
@@ -109,11 +118,11 @@ app.listen (port, err => {
 		// Creates the students table
 		// whether this's not defined.
 		db.exec (
-			signUp.clearStr (`
+			api.clearStr (`
 				CREATE TABLE IF NOT 
 				EXISTS Students (
-					'firstname' varchar, 
-					'lastname' varchar, 
+					'firstName' varchar, 
+					'lastName' varchar, 
 					'phoneNumber' integer, 
 					'id' integer PRIMARY KEY
 				);

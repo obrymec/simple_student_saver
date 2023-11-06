@@ -5,7 +5,7 @@
 	@supported: DESKTOP, MOBILE
 	@file: error_404.html
 	@created: 2021-11-19
-	@updated: 2023-10-29
+	@updated: 2023-11-05
 	@version: 1.0.1
 -->
 
@@ -54,10 +54,20 @@
 					<h1 id = "error-404-text"></h1>
 				</div>
 			</section>
-			<!--Controller-->
+			<!--External dependencies-->
+			<script
+				src = "./front_end/src/utils/typewriter.js"
+				type = "text/javascript"
+			></script>
+			<!--Custom dependencies-->
+			<script
+				src = "./front_end/src/utils/anim.js"
+				type = "text/javascript"
+			></script>
+			<!--Controllers-->
 			<script
 				src = "./front_end/src/features/page_not_found/error_404.js"
-				type = "module"
+				type = "text/javascript"
 			></script>
 		</body>
 	</html>

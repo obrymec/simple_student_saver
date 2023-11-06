@@ -1,82 +1,194 @@
-// Creating study data class.
-function StudyDataViewer () {
-	// Attributes.
-	let delay = 0.0;
+/**
+* @project Simple Student Saver - https://obrymec.github.io/simple_student_saver
+* @fileoverview The logic to fetch all logged student(s) from the database.
+* @author Obrymec - obrymecsprinces@gmail.com
+* @supported DESKTOP, MOBILE
+* @created 2021-11-19
+* @updated 2023-11-05
+* @version 1.0.1
+* @file data.js
+*/
 
-	// Adds a study data with the given values.
-	this.add_data = (fname, lname, phone) => {
-		// Generates the corresponding css format.
-		let generated_id = ("div#" + fname.replace (' ', '-') + '-' + lname.replace (' ', '-') + "-data");
-		// Generates the corresponding html format.
-		$ ("div.study-data").append ("<br/><div class = 'data' id = '" + generated_id.split ('#') [1] + "'>\
-			<div class = 'attributes'>\
-				<div class = 'fname-row'><label>Prénom(s)</label></div><br/>\
-				<div class = 'lname-row'><label>Nom</label></div><br/>\
-				<div class = 'pnumber-row'><label>Numéro de téléphone</label></div>\
-			</div><div class = 'values'>\
-				<div class = 'fname-row'><label>: " + fname + "</label></div><br/>\
-				<div class = 'lname-row'><label>: " + lname + "</label></div><br/>\
-				<div class = 'pnumber-row'><label>: " + phone + "</label></div>\
-			</div>\
-		</div>");
-		// Waiting for the system delay.
-		window.setTimeout (() => $ (generated_id).animate ({opacity: 1}, "fast"), delay);
-		delay += 150;
-	}
-}
-
-// Animates the study data web page.
-function animate_study_data (direction = 1, finished =  null) {
-	// Enabled back button.
-	$ ("svg#back-btn").css ("visibility", "visible").css ("pointer-events", "auto");
-	// Checks browser network.
+/**
+ * @description Animates the
+ * 	student data web page.
+ * @param {int=} direction
+ * 	The animation direction.
+ * @param {Function=} finished
+ * 	Called when animattion is
+ * 	over.
+ * @fires animateData_#finished
+ * @private {Function}
+ * @function animate_
+ * @returns {void} void
+ */
+function animateData_ (
+	direction = 1,
+	finished = null
+) {
+	// Enables back button.
+	$ ("svg#back-btn").css (
+		"pointer-events", "auto"
+	).css (
+		"visibility", "visible"
+	);
+	// Whether the browser
+	// is online.
 	if (window.navigator.onLine) {
-		// Checks animation direction.
-		if (direction >= 1) title_bar_visibility (true, () => {
-			// Animates the title view.
-			animate_text (document.querySelector ("div.title-zone > label"), "Liste des étudiants", 25, 0, 1, false, finished);
+		// The text to write/backspace.
+		const text = "Students List";
+		// The title bar text.
+		const title = (
+			document.querySelector (
+				"div.title-zone > span"
+			)
+		);
+		// Whether the animation
+		// direction is normal.
+		if (direction >= 1) {
+			// Shows the title bar.
+			setTitleBarVisibility (
+				true, () => (
+					animateText ({
+						onFinished: finished,
+						target: title,
+						interval: 25,
+						text
+					})
+				)
+			);
 		// Otherwise.
-		}); else {
+		} else {
 			// Removes the current page.
-			$ ("div.views").html ('');
+			$ ("main.content").html ('');
 			// Animates the title view.
-			animate_text (document.querySelector ("div.title-zone > label"), "Liste des étudiants", 15, 0, -1, true, () => {
-				// Hides the title bar.
-				title_bar_visibility (false, () => {
-					// Disables the back button action and visibility.
-					$ ("svg#back-btn").css ("visibility", "hidden").css ("pointer-events", "none");
-					// Calls the given callback whether it exists.
-					if (finished !== undefined && finished !== null) finished ();
-				});
+			animateText ({
+				reverse: true,
+				target: title,
+				interval: 25,
+				text,
+				onFinished: () => (
+					setTitleBarVisibility (
+						false, () => {
+							// Disables the back
+							// button action and
+							// visibility.
+							$ ("svg#back-btn").css (
+								"pointer-events",
+								"none"
+							).css (
+								"visibility",
+								"hidden"
+							);
+							// Whether `finished`
+							// event is listening.
+							if (
+								typeof finished ===
+									"function"
+							) finished ();
+						}
+					)
+				)
 			});
 		}
 	// Network error.
-	} else alert ("Votre navigateur n'est pas connecté. Vérifiez votre réseau, puis reéssayez.");
+	} else {
+		// Makes a warn about
+		// a network error.
+		Toastify ({
+			...toastConfigs,
+			text: clearStr (`
+				The browser isn't connected 
+				to internet. Check your 
+				network and retry.
+			`)
+		}).showToast ();
+	}
 }
 
-// Loads saved study(ies) data from the database.
-function load_studies_data () {
-	// Creating a new studies viewer.
-	let study_viewer = new StudyDataViewer ();
-	// Calls ajax requester to get all saved study(ies) from the database.
-	ajax_request ("/students-data", "POST", new Object ({}), server_data => {	
-		// No data have been found.
-		if (server_data.length === 0 || is_empty (server_data)) $ ("div.no-data-zone").css ("display", "flex");
-		// Otherwise.
-		else {
-			// Disables "No data available" message.
-			$ ("div.no-data-zone").css ("display", "none");
-			// Iterates over study(ies) data.
-			for (let study_data of server_data) {
-				// Adds each loaded data.
-				study_viewer.add_data (study_data.firstname, study_data.lastname, study_data.phone_number);
+/**
+ * @description Loads student(s)
+ * 	data from the database.
+ * @function loadStudentsData_
+ * @private {Function}
+ * @returns {void} void
+ */
+function loadStudentsData_ () {
+	// Creates a new student
+	// data viewer.
+	let viewer = new StudentViewer ();
+	// Calls ajax requester
+	// to get all saved
+	// student(s) from
+	// the database.
+	ajaxRequest ({
+		link: "/students-data",
+		method: "POST",
+		payload: {},
+		// Failed ajax request.
+		onFailed: _ => {
+			// Makes a warn about
+			// an error.
+			Toastify ({
+				...toastConfigs,
+				text: clearStr (`
+					Unable to load student(s) 
+					data. It seem that 
+					something wrong, 
+					please retry.
+				`)
+			}).showToast ();
+		},
+		onSuccess: serverData => {
+			// No data have been
+			// found.
+			if (
+				serverData.length === 0
+				|| isset (serverData)
+			) {
+				// Displays a tag
+				// about no data.
+				$ ("div.no-data-zone").css (
+					"display", "flex"
+				);
+			// Otherwise.
+			} else {
+				// Hides the message.
+				$ ("div.no-data-zone").css (
+					"display", "none"
+				);
+				// Displaying student(s)
+				// data.
+				for (
+					let student of serverData
+				) {
+					// Adds each loaded data.
+					viewer.addData (
+						student.firstName,
+						student.lastName,
+						student.phoneNumber
+					);
+				}
 			}
 		}
-	// For failed ajax request.
-	}, status => console.err ("Failed to make the target ajax request: ", status));
+	});
 }
 
-// Animates the study(ies) data web page.
-animate_study_data (1, () => load_studies_data ());
-// Fixing back button action.
-$ ("svg#back-btn").click (() => animate_study_data (-1, () => $ ("div.views").load ("../html/study_sign_up.html")));
+// Animates the student(s) data
+// web page.
+animateData_ (1, loadStudentsData_);
+
+// Listens `click` event on the
+// back button.
+$ ("svg#back-btn").click (
+	() => animateData_ (
+		-1, () => (
+			$ ("main.content").load (
+				clearStr (`
+					./front_end/src/features
+					/add_student/sign_up.html
+				`, true)
+			)
+		)
+	)
+);

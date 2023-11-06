@@ -4,19 +4,10 @@
 * @author Obrymec - obrymecsprinces@gmail.com
 * @supported DESKTOP, MOBILE
 * @created 2021-11-19
-* @updated 2023-10-29
+* @updated 2023-11-05
 * @file sign_up.js
 * @version 1.0.1
 */
-
-// Custom dependencies.
-import {cssAnimation, animateText} from "./front_end/src/utils/anim.js";
-import {capitalize, clearStr} from "./front_end/src/utils/string.js";
-import {
-	setTitleBarVisibility,
-	toastConfigs,
-	ajaxRequest
-} from "./front_end/src/utils/std.js";
 
 // Global attributes.
 window.firstName = (
@@ -39,6 +30,35 @@ window.options = (
 		"div.options"
 	)
 );
+
+/**
+ * @description Puts a mouse
+ * 	blur effect to an input.
+ * @param {Element} element
+ * 	The input field ref.
+ * @param {String=} color
+ * 	The blur color.
+ * @private {Function}
+ * @function blurer_
+ * @returns {void} void
+ */
+function blurer_ (
+	element,
+	color = "silver"
+) {
+	// Apply input blur
+	// focus effect.
+	$ (element).css (
+		"box-shadow",
+		`0 0 2px 2px ${color}`
+	).css (
+		"font-weight",
+		"normal"
+	).css (
+		"border",
+		"1px solid transparent"
+	);
+}
 
 /**
  * @description Puts a mouse
@@ -65,7 +85,10 @@ function focuser_ (
 			"bold"
 		).css (
 			"box-shadow",
-			("0 0 2px 2px " + color)
+			`0 0 2px 2px ${color}`
+		).css (
+			"border",
+			"1px solid transparent"
 		);
 }
 
@@ -104,32 +127,6 @@ function showError_ (
 }
 
 /**
- * @description Puts a mouse
- * 	blur effect to an input.
- * @param {Element} element
- * 	The input field ref.
- * @param {String=} color
- * 	The blur color.
- * @private {Function}
- * @function blurer_
- * @returns {void} void
- */
-function blurer_ (
-	element,
-	color = "silver"
-) {
-	// Apply input blur
-	// focus effect.
-	$ (element).css (
-		"box-shadow",
-		("0 0 2px 2px " + color)
-	).css (
-		"font-weight",
-		"normal"
-	);
-}
-
-/**
  * @description Adds a student
  * 	to database.
  * @function addStudent_
@@ -140,15 +137,13 @@ function addStudent_ () {
 	// Whether the browser
 	// is connected to
 	// internet.
-	if (
-		window.navigator.onLine
-	) {
+	if (window.navigator.onLine) {
 		// Corrects the passed
 		// firstname.
 		$ (firstName).val (
 			capitalize (
 				$ (firstName).val ()
-			).trim ().replace (
+			)?.trim ().replace (
 				/(<([^>]+)>)/ig, ''
 			)
 		);
@@ -156,9 +151,10 @@ function addStudent_ () {
 		// lastname.
 		$ (lastName).val (
 			$ (lastName).val ()
-		).toUpperCase ()
-		 .trim ().replace (
-			/(<([^>]+)>)/ig, ''
+				.toUpperCase ()
+				.trim ().replace (
+					/(<([^>]+)>)/ig, ''
+				)
 		);
 		// Corrects the passed
 		// phone number.
@@ -172,8 +168,10 @@ function addStudent_ () {
 		// Calls ajax requester
 		// to send student data
 		// to the server.
-		ajaxRequest (
-			"/data", "POST", {
+		ajaxRequest ({
+			method: "POST",
+			link: "/data",
+			payload: {
 				phoneNumber: (
 					$ (phoneNumber).val ()
 				),
@@ -184,48 +182,59 @@ function addStudent_ () {
 					$ (lastName).val ()
 				)
 			},
+			// Failed ajax request.
+			onFailed: _ => (
+				Toastify ({
+					...toastConfigs,
+					text: clearStr (`
+						Unable to save the student. 
+						It seem that something 
+						wrong, please retry.
+					`)
+				}).showToast ()
+			),
 			// Success ajax request.
-			data => {
+			onSuccess: ({
+				phoneNumber,
+				isAccepted,
+				firstName,
+				lastName,
+				isExists
+			}) => {
 				// Whether an error is
 				// detected.
-				if (!data.isAccepted) {
+				if (!isAccepted) {
+					// Whether an error is
+					// detected about the
+					// passed phone number.
+					if (phoneNumber !== "OK") {
+						// Displays server
+						// error message.
+						showError_ (
+							"div.phone-number-zone",
+							phoneNumber
+						);
+					}
 					// Whether an error is
 					// detected about the
 					// passed firstname.
-					if (
-						data.firstName !== "ok"
-					) {
+					if (firstName !== "OK") {
 						// Displays server
 						// error message.
 						showError_ (
 							"div.firstname-zone",
-							data.firstName
+							firstName
 						);
 					}
 					// Whether an error is
 					// detected about the
 					// passed lastname.
-					if (
-						data.lastName !== "ok"
-					) {
+					if (lastName !== "OK") {
 						// Displays server
 						// error message.
 						showError_ (
 							"div.lastname-zone",
-							data.lastName
-						);
-					}
-					// Whether an error is
-					// detected about the
-					// passed phone number.
-					if (
-						data.phoneNumber !== "ok"
-					) {
-						// Displays server
-						// error message.
-						showError_ (
-							"div.phone-number-zone",
-							data.phoneNumber
+							lastName
 						);
 					}
 				// Otherwise.
@@ -234,7 +243,7 @@ function addStudent_ () {
 					// student is already
 					// defined inside the
 					// database.
-					if (data.isExists) {
+					if (isExists) {
 						// Makes a warn about
 						// an existing student.
 						Toastify ({
@@ -260,21 +269,8 @@ function addStudent_ () {
 						}).showToast ();
 					}
 				}
-			},
-			// Failed ajax request.
-			_ => {
-				// Makes a warn about
-				// bad operation.
-				Toastify ({
-					...toastConfigs,
-					text: clearStr (`
-						Unable to save the student. 
-						It seem that something 
-						wrong, please retry.
-					`)
-				}).showToast ();
 			}
-		);
+		});
 	// Network error.
 	} else {
 		// Makes a warn about
@@ -306,6 +302,10 @@ function animate_ (
 	direction = 1,
 	finish = null
 ) {
+	// The form title text.
+	const formText = "Sign up student";
+	// The title bar text.
+	const headerText = "Sign Up";
 	// Disables options.
 	$ ("input, svg#back-btn").css (
 		"pointer-events", "none"
@@ -324,16 +324,16 @@ function animate_ (
 		width: "250px",
 		opacity: 1
 	};
-	// The title view.
-	const view = (
+	// The header bar title.
+	const headerTitle = (
 		document.querySelector (
 			"div.title-zone > span"
 		)
 	);
-	// The title text.
-	const text = (
+	// The sign up form title.
+	const formTitle = (
 		document.querySelector (
-			"div.title span"
+			"div.title > span"
 		)
 	);
 	// Sets animation data.
@@ -358,102 +358,91 @@ function animate_ (
 	if (direction >= 1) {
 		// Shows the title bar.
 		setTitleBarVisibility (
-			true, () => {
-				// Title view animation.
-				animateText (
-					view, "Sign up", 25, 0, 1,
-					false, () => {
-						// Title text animation.
-						animateText (
-							text, "Sign up student",
-							25, 0, -1, false, () => {
-								// First name field
-								// animation.
+			true, () => (
+				animateText ({
+					target: headerTitle,
+					text: headerText,
+					interval: 25,
+					onFinished: () => (
+						animateText ({
+							target: formTitle,
+							text: formText,
+							interval: 25,
+							onFinished: () => (
 								cssAnimation ({
 									...animData ("scale"),
 									ref: firstName,
-									finish: () => {
-										// Last name field
-										// animation.
+									finish: () => (
 										cssAnimation ({
 											...animData ("scale"),
 											ref: lastName,
-											finish: () => {
-												// Phone number field
-												// animation.
+											finish: () => (
 												cssAnimation ({
 													...animData ("scale"),
 													ref: phoneNumber,
-													finish: () => {
-														// Options animation.
+													finish: () => (
 														cssAnimation ({
-															...animData ("options_show"),
+															...animData ("optionsShow"),
 															ref: options,
 															finish
-														}, setTransformY ('0', 1));					
-													}
-												}, finalValues);
-											}
-										}, finalValues);
-									}
-								}, finalValues);
-							}
-						);
-					}
-				);
-			}
+														}, setTransformY ('0', 1))		
+													)
+												}, finalValues)
+											)
+										}, finalValues)
+									)
+								}, finalValues)
+							)
+						})
+					)
+				})
+			)
 		);
 	// Otherwise.
 	} else {
 		// Options animation.
 		cssAnimation ({
-			...animData ("options_show", "reverse"),
+			...animData ("optionsShow", "reverse"),
 			ref: options,
-			finish: () => {
-				// Phone number field
-				// animation.
+			finish: () => (
 				cssAnimation ({
 					...animData ("scale", "reverse"),
 					ref: phoneNumber,
-					finish: () => {
-						// Last name field
-						// animation.
+					finish: () => (
 						cssAnimation ({
 							...animData ("scale", "reverse"),
 							ref: lastName,
-							finish: () => {
-								// First name field
-								// animation.
+							finish: () => (
 								cssAnimation ({
 									...animData ("scale", "reverse"),
 									ref: firstName,
-									finish: () => {
-										// Title view
-										// animation.
-										animateText (
-											view, "Sign up student",
-											15, 0, 1, true, () => {
-												// Title text
-												// animation.
-												animateText (
-													text, "Sign up",
-													15, 0, -1, true, () => {
-														// Hides the
-														// title bar.
+									finish: () => (
+										animateText ({
+											target: formTitle,
+											text: formText,
+											reverse: true,
+											interval: 15,
+											onFinished: () => (
+												animateText ({
+													target: headerTitle,
+													text: headerText,
+													reverse: true,
+													interval: 15,
+													onFinished: () => (
 														setTitleBarVisibility (
 															false, finish
-														);
-													}
-												);
-											}
-										);
-									}
-								}, ...initialValues);
-							}
-						}, ...initialValues);
-					}
-				}, ...initialValues);
-			}
+														)
+													)
+												})
+											)
+										})
+									)
+								}, initialValues)
+							)
+						}, initialValues)
+					)
+				}, initialValues)
+			)
 		}, setTransformY ("-52px", 0));
 	}
 }
@@ -559,9 +548,7 @@ $ (options).children ()[0]
 			// Whether the browser
 			// is connected to
 			// internet.
-			if (
-				window.navigator.onLine
-			) {
+			if (window.navigator.onLine) {
 				// Disables any interactions
 				// on the formulary.
 				$ ("input").css (

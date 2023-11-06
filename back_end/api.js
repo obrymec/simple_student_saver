@@ -4,7 +4,7 @@
 * @author Obrymec - obrymecsprinces@gmail.com
 * @supported DESKTOP, MOBILE
 * @created 2021-11-19
-* @updated 2023-10-29
+* @updated 2023-11-05
 * @version 1.0.0
 * @file api.js
 */
@@ -111,7 +111,7 @@ function checkFirstName_ (
       // Sends good results.
       return {
         isAccepted: true,
-        firstName: "ok"
+        firstName: "OK"
       };
 		}
 	// Otherwise.
@@ -175,7 +175,7 @@ function checkLastName_ (
       // Sends good results.
       return {
         isAccepted: true,
-        lastName: "ok"
+        lastName: "OK"
       };
     }
   // Otherwise.
@@ -235,7 +235,7 @@ function checkPhoneNumber_ (
     if (isCorrect || isValid) {
         // Sends good results.
         return {
-          phoneNumber: "ok",
+          phoneNumber: "OK",
           isAccepted: true
         };
     // Otherwise.
@@ -324,28 +324,30 @@ function addStudent (
     const studentData = (
       db.prepare (
         clearStr (`
-          SELECT firstname, lastname 
-          FROM Students 
-          WHERE firstname = ? 
-          AND lastname = ?;
+          SELECT firstName, 
+          lastName FROM 
+          Students WHERE 
+          firstName = ? 
+          AND lastName = ?;
         `)
       )
+    ).get (
+      firstName, lastName
     );
     // Whether the given student
     // isn't defined inside the
-    // database again.
+    // database.
     if (
-      studentData.get (
-        firstName, lastName
-      ).length <= 0
+      studentData === undefined
+      || studentData === null
     ) {
       // Prepares insertion query.
       const insert = (
         db.prepare (
-          clearStr (`
-            INSERT INTO Students (
-              firstname, 
-              lastname, 
+          clearStr (
+            `INSERT INTO Students (
+              firstName, 
+              lastName, 
               phoneNumber
             ) VALUES (?, ?, ?);
           `)

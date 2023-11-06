@@ -4,7 +4,7 @@
 * @author: Obrymec - obrymecsprinces@gmail.com
 * @supported: DESKTOP, MOBILE
 * @created: 2023-06-16
-* @updated: 2023-10-29
+* @updated: 2023-11-05
 * @file: style.css
 * @version: 0.0.3
 */
@@ -14,6 +14,7 @@
   --body-bg-color: rgb(245, 245, 245);
   --white-700: rgb(230, 230, 230);
   --white-800: rgb(248, 244, 244);
+  --white-600: rgb(180, 180, 180);
   --gray-100: rgb(180, 180, 180);
   --secondary-color: slateblue;
   --primary-color: steelblue;
@@ -40,14 +41,7 @@
     text-shadow: 0 0 5px red;
   }
 }
-@keyframes fadeout {
-  from {
-    opacity: 0;
-  } to {
-    opacity: 1;
-  }
-}
-@keyframes options_show {
+@keyframes optionsShow {
   from {
     transform: translateY(-52px);
     opacity: 0;
@@ -72,13 +66,10 @@
 /* All tags */
 * {
   font-family: Verdana, Geneva, Tahoma, sans-serif, Arial;
-  background-color: var(--body-bg-color);
   transition: all .2s linear;
   color: var(--text-color);
   user-select: none;
   font-size: 16px;
-  padding: 0;
-  margin: 0;
 }
 
 /* Hover */
@@ -91,21 +82,26 @@ div.data > div.attributes {
   padding-right: 25px;
 }
 
+/* Error message */
+h1#error-404-text > span {
+  font-size: 96px;
+}
+
 /* Title zone */
 header > div.title-zone {
   width: 100%;
 }
 
 /* Formulary title */
-div.title > span {
+div.title span {
   text-shadow: 0 0 3px var(--primary-color);
-  font-size: 22px;
+  font-size: 32px;
 }
 
-/* Text title */
-header > div.title-zone > span {
-  font-weight: bold;
-  font-size: 1rem;
+/* Placeholder */
+input::placeholder {
+  color: var(--white-600);
+  font-size: 14px;
 }
 
 /* Input hover */
@@ -115,11 +111,26 @@ input[type="button"]:hover {
   background-color: var(--secondary-color);
 }
 
+/* Body */
+body {
+  background-color: var(--body-bg-color);
+  padding: 0;
+  margin: 0;
+}
+
 /* Back arrow button */
 header > div.icon-zone > svg {
   transform: translateY(3px);
   fill: var(--white-color);
+  visibility: hidden;
   cursor: pointer;
+}
+
+/* Text title */
+header > div.title-zone span {
+  color: var(--white-color);
+  font-weight: bold;
+  font-size: 1rem;
 }
 
 /* No data text */
@@ -179,11 +190,10 @@ div.no-data-zone {
 
 /* Input fields */
 input.field {
-  box-shadow: 0 0 2px 2px var(--silver-color);
+  box-shadow: 0 0 1px 1px var(--silver-color);
   border: 1px solid var(--silver-color);
   color: var(--primary-color);
   padding: 2px 15px 2px 15px;
-  letter-spacing: 1.5px;
   border-radius: 30px;
   outline: none;
   height: 30px;
@@ -242,7 +252,6 @@ section.error-404 {
   background-color: var(--white-800);
   color: var(--text-color);
   justify-content: center;
-  letter-spacing: 1.5px;
   align-items: center;
   padding-right: 15px;
   padding-left: 15px;

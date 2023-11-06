@@ -4,31 +4,10 @@
 * @author Obrymec - obrymecsprinces@gmail.com
 * @supported DESKTOP, MOBILE
 * @created 2021-11-19
-* @updated 2023-10-30
+* @updated 2023-11-05
 * @version 1.0.1
 * @file std.js
 */
-
-// Custom dependencies.
-import {cssAnimation} from "./front_end/src/utils/anim.js";
-
-/**
- * @description The toast configs.
- * @constant {Object<String, any>=}
- * @public
- * @field
- */
-const toastConfigs = {
-  gravity: "bottom",
-  stopOnFocus: true,
-  position: "left",
-  duration: 3000,
-  close: true,
-  style: {
-    background: "steelblue",
-    color: "#fff"
-  }
-};
 
 /**
  * @description Checks whether an
@@ -43,7 +22,7 @@ function isset (attr) {
   // The stringify version of
   // the given input.
   const stringify = (
-    attr.toString ().trim ()
+    String (attr).trim ()
   );
   // Checks matches.
 	return (
@@ -55,67 +34,6 @@ function isset (attr) {
     || attr === undefined
     || attr === null
   );
-}
-
-/**
- * @description Hides and shows
- *  the title bar.
- * @param {boolean} visible If
- *  we want to show or hide
- *  the title bar.
- * @param {?Function=} finish
- *  Called when the title bar
- * 	animation is over.
- * @fires setTitleBarVisibility#finish
- * @function setTitleBarVisibility
- * @public
- * @returns {void} void
- */
-function setTitleBarVisibility (
-  visible,
-  finish = null
-) {
-  // The global header tag ref.
-  const header = (
-    document.querySelector (
-      "header"
-    )
-  );
-  // Whether the visibility
-  // is set to `false`.
-  if (!visible) {
-    // Hides the title bar.
-    cssAnimation (
-      {
-        direction: "reverse",
-        name: "translate",
-        duration: 200,
-        ref: header,
-        finish
-      },
-      {
-        transform: (
-					"translateY(-120%)"
-				)
-      }
-    );
-  // Otherwise.
-  } else {
-    // Shows the title bar.
-    cssAnimation (
-      {
-        name: "translate",
-        duration: 200,
-        ref: header,
-        finish
-      },
-      {
-        transform: (
-					"translateY(0)"
-				)
-      }
-    );
-  }
 }
 
 /**
@@ -162,11 +80,11 @@ function ajaxRequest ({
 	method,
 	link
 }) {
-	// Creating a new xml http
-	// request.
+	// Creating a new xml
+	// http request.
 	const xhr = new XMLHttpRequest ();
-	// Opens the xhr with the
-	// passed parameters.
+	// Opens the xhr with
+	// the passed params.
 	xhr.open (method, link, true);
 	// Changes the default
 	// header.
@@ -174,7 +92,8 @@ function ajaxRequest ({
 		"Content-type",
 		"application/json;charset=UTF-8"
 	);
-	// Sends the passed data.
+	// Sends the passed
+	// data.
 	xhr.send (
 		JSON.stringify (
 			payload
@@ -182,15 +101,17 @@ function ajaxRequest ({
 	);
 	// Listens server response.
 	xhr.onload = () => {
-		// Whether no fatal errors
-		// is detected.
+		// Whether no fatal
+		// errors throws.
 		if (
 			xhr.status >= 200 &&
 			xhr.status < 400
 		) {
 			// Whether `success`
 			// event is listening.
-			if (!isset (onSuccess)) {
+			if (
+				typeof onSuccess === "function"
+			) {
 				/**
 				 * @description Throws `success`
 				 *	event.
@@ -211,7 +132,9 @@ function ajaxRequest ({
 				);
 			}
 		// Otherwise.
-		} else if (!isset (onFailed)) {
+		} else if (
+			typeof onFailed === "function"
+		) {
 			/**
 			 * @description Throws `failed`
 			 *	event.
@@ -224,15 +147,3 @@ function ajaxRequest ({
 		}
 	}
 }
-
-/**
- * @description Exports
- *  all public features.
- * @exports *
- */
-export {
-	setTitleBarVisibility,
-	toastConfigs,
-	ajaxRequest,
-	isset
-};
