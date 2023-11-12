@@ -1,8 +1,8 @@
 # Simple Student Saver
 ![Full Stack Development](https://img.shields.io/badge/full%20stack%20development-FF5722.svg?style=for-the-badge)
-![Web Development](https://img.shields.io/badge/web%20development-7D4698.svg?style=for-the-badge)
 ![Web Application](https://img.shields.io/badge/web%20application-%233B4D98?style=for-the-badge)
-![User Interface](https://img.shields.io/badge/user%20interface-1997B5.svg?style=for-the-badge)
+![User Interface](https://img.shields.io/badge/student%20saver-1997B5.svg?style=for-the-badge)
+![Web Development](https://img.shields.io/badge/PWA-7D4698.svg?style=for-the-badge)
 
 This small project is academic. It was developed with Native Web Development
 Languages. The main goal of the project is to save a student data inside a
