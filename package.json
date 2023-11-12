@@ -15,7 +15,7 @@
   },
 	"scripts": {
 		"dev": "nodemon ./server.js",
-		"start": "./server.js"
+		"start": "node ./server.js"
 	},
 	"dependencies": {
 		"better-sqlite3": "^7.4.3",
