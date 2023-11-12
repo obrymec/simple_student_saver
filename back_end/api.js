@@ -27,9 +27,9 @@ function clearStr (
   // Returns the cleared
   // shape of the given
   // input string.
-  return input.replace (
+  return input?.replace (
     /[\n\t]/g, ''
-  ).trim ().replaceAll (
+  )?.trim ()?.replaceAll (
     (clearSpaces ? ' ' : ''),
     ''
   );
