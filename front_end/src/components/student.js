@@ -1,11 +1,11 @@
 /**
-* @project Simple Student Saver - https://obrymec.github.io/simple_student_saver
+* @project Simple Student Saver - https://simple-student-saver.onrender.com/
 * @fileoverview The graphical data viewer of a student.
 * @author Obrymec - obrymecsprinces@gmail.com
 * @supported DESKTOP, MOBILE
 * @type {StudentViewer}
 * @created 2023-11-05
-* @updated 2023-11-05
+* @updated 2023-11-12
 * @file student.js
 * @version 0.0.1
 */

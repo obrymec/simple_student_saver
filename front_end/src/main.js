@@ -1,10 +1,10 @@
 /**
-* @project Simple Student Saver - https://obrymec.github.io/simple_student_saver
+* @project Simple Student Saver - https://simple-student-saver.onrender.com/
 * @fileoverview The main application entry point.
 * @author Obrymec - obrymecsprinces@gmail.com
 * @supported DESKTOP, MOBILE
 * @created 2022-10-29
-* @updated 2023-11-05
+* @updated 2023-11-12
 * @version 0.0.2
 * @file main.js
 */

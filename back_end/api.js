@@ -1,10 +1,10 @@
 /**
-* @project Simple Student Saver - https://obrymec.github.io/simple_student_saver
+* @project Simple Student Saver - https://simple-student-saver.onrender.com/
 * @fileoverview Provides an API to manage students data inside a database.
 * @author Obrymec - obrymecsprinces@gmail.com
 * @supported DESKTOP, MOBILE
 * @created 2021-11-19
-* @updated 2023-11-05
+* @updated 2023-11-12
 * @version 1.0.0
 * @file api.js
 */
@@ -59,6 +59,7 @@ function isset (attr) {
     || stringify.length <= 0
     || attr === undefined
     || attr === null
+    || attr === NaN
   );
 }
 
@@ -265,13 +266,23 @@ function checkPhoneNumber_ (
  * @description Adds the given
  *  student to the database.
  * @param {
- *  Object<String, String>
- * } body The firstname, phone
- *  and lastname number of the
- *  student.
- * @param {
- *  BetterSqlite3.Database
- * } db The database reference.
+ *  phoneNumber: String,
+ *  firstName: String,
+ *  lastName: String
+ * } body The request's data.
+ *  It contains the following
+ *  keys:
+ *
+ *  - String phoneNumber: The
+ *    student's phone number.
+ *
+ *  - String firstname: The
+ *    student's firstname.
+ *
+ *  - String lastname: The
+ *    student's lastname.
+ * @param {BetterSqlite3.Database} db
+ *  The database reference.
  * @param {Response} res The
  *  server's response.
  * @function addStudent

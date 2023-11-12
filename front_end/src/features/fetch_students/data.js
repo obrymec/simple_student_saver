@@ -1,10 +1,10 @@
 /**
-* @project Simple Student Saver - https://obrymec.github.io/simple_student_saver
+* @project Simple Student Saver - https://simple-student-saver.onrender.com/
 * @fileoverview The logic to fetch all logged student(s) from the database.
 * @author Obrymec - obrymecsprinces@gmail.com
 * @supported DESKTOP, MOBILE
 * @created 2021-11-19
-* @updated 2023-11-05
+* @updated 2023-11-12
 * @version 1.0.1
 * @file data.js
 */

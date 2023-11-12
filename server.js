@@ -1,10 +1,10 @@
 /**
-* @project Simple Student Saver - https://obrymec.github.io/simple_student_saver
 * @fileoverview Defines routes, paths and nodejs server configs with expressjs.
+* @project Simple Student Saver - https://simple-student-saver.onrender.com/
 * @author Obrymec - obrymecsprinces@gmail.com
 * @supported DESKTOP, MOBILE
 * @created 2021-11-19
-* @updated 2023-11-05
+* @updated 2023-11-12
 * @file server.js
 * @version 1.0.1
 */
@@ -106,7 +106,8 @@ app.get (
 
 // Starts the server.
 app.listen (port, err => {
-	// Whether an error is thrown.
+	// Whether an error is
+	// thrown.
 	if (err) {
 		// Displays this error
 		// message.
@@ -115,8 +116,9 @@ app.listen (port, err => {
 		);
 	// Otherwise.
 	} else {
-		// Creates the students table
-		// whether this's not defined.
+		// Creates the students
+		// table whether this's
+		// not defined.
 		db.exec (
 			api.clearStr (`
 				CREATE TABLE IF NOT 
@@ -128,8 +130,8 @@ app.listen (port, err => {
 				);
 			`)
 		);
-		// Warns the user on server
-		// starting.
+		// Warns the user when
+		// the server start.
 		console.log (
 			"Server started at port: ",
 			port

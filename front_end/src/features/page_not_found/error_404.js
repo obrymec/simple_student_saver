@@ -1,10 +1,10 @@
 /**
-* @project Simple Student Saver - https://obrymec.github.io/simple_student_saver
+* @project Simple Student Saver - https://simple-student-saver.onrender.com/
 * @fileoverview The controller to animate error 404 text.
 * @author Obrymec - obrymecsprinces@gmail.com
 * @supported DESKTOP, MOBILE
 * @created 2023-10-29
-* @updated 2023-11-05
+* @updated 2023-11-12
 * @file error_404.js
 * @version 0.0.1
 */

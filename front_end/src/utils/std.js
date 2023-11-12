@@ -1,10 +1,10 @@
 /**
-* @project Simple Student Saver - https://obrymec.github.io/simple_student_saver
+* @project Simple Student Saver - https://simple-student-saver.onrender.com/
 * @fileoverview Defines some methods to manage frequent tasks.
 * @author Obrymec - obrymecsprinces@gmail.com
 * @supported DESKTOP, MOBILE
 * @created 2021-11-19
-* @updated 2023-11-05
+* @updated 2023-11-12
 * @version 1.0.1
 * @file std.js
 */
@@ -33,6 +33,7 @@ function isset (attr) {
     || stringify.length <= 0
     || attr === undefined
     || attr === null
+		|| attr === NaN
   );
 }
 
@@ -63,7 +64,7 @@ function isset (attr) {
  * 		data.
  *
  * 	- Function onSucess: Called
- * 		when the request successed.
+ * 		when the request succeeded.
  *
  * 	- Function onFailed: Called
  * 		when the request failed.

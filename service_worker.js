@@ -1,11 +1,11 @@
 /**
-* @project Simple Student Saver - https://obrymec.github.io/simple_student_saver
+* @project Simple Student Saver - https://simple-student-saver.onrender.com/
 * @fileoverview Defines the service worker to manage app when it's offline.
 * @author Obrymec - obrymecsprinces@gmail.com
 * @supported DESKTOP, MOBILE
 * @file service_worker.js
 * @created 2023-11-05
-* @updated 2023-11-05
+* @updated 2023-11-12
 * @version 0.0.1
 */
 
@@ -87,9 +87,7 @@ self.addEventListener (
  * @function cacheFirst_
  * @private {Function}
  * @async
- * @returns {
- *  Response|Promise<Response>
- * } Response | Promise
+ * @returns {Response|Promise<Response>} Response | Promise
  */
 async function cacheFirst_ (
   req

@@ -1,10 +1,10 @@
 /**
-* @project Simple Student Saver - https://obrymec.github.io/simple_student_saver
+* @project Simple Student Saver - https://simple-student-saver.onrender.com/
 * @fileoverview The controller to manage a student sign up process.
 * @author Obrymec - obrymecsprinces@gmail.com
 * @supported DESKTOP, MOBILE
 * @created 2021-11-19
-* @updated 2023-11-05
+* @updated 2023-11-12
 * @file sign_up.js
 * @version 1.0.1
 */
@@ -94,7 +94,7 @@ function focuser_ (
 
 /**
  * @description Shows an error
- * 	message for given input.
+ * 	message for the given input.
  * @param {Element} element
  * 	The input field ref.
  * @param {String} message
@@ -290,7 +290,7 @@ function addStudent_ () {
  * @description Animates the current
  * 	web page.
  * @param {int=} direction The
- *  animation direction
+ *  animation direction.
  * @param {Function=} finish
  * 	Called at the end of the
  * 	animation.
