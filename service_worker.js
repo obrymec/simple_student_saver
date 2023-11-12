@@ -89,9 +89,7 @@ self.addEventListener (
  * @async
  * @returns {Response|Promise<Response>} Response | Promise
  */
-async function cacheFirst_ (
-  req
-) {
+async function cacheFirst_ (req) {
   // The created cache
   // data.
   const cache = (
