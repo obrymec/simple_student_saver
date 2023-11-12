@@ -27,10 +27,10 @@ function clearStr (
   // Returns the cleared
   // shape of the given
   // input string.
-  return input?.replace (
+  return input.replace (
     /[\n\t]/g, ''
-  )?.trim ()?.replaceAll (
-    (clearSpaces ? ' ' : ''),
+  ).trim ().replace (
+    (clearSpaces ? /\s/g : ''),
     ''
   );
 }

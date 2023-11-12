@@ -30,8 +30,8 @@ function clearStr (
   // input string.
   return input.replace (
     /[\n\t]/g, ''
-  ).trim ().replaceAll (
-    (clearSpaces ? ' ' : ''),
+  ).trim ().replace (
+    (clearSpaces ? /\s/g : ''),
     ''
   );
 }
