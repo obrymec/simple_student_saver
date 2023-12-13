@@ -23,7 +23,7 @@ uses AJAX and data transfer uses JSON language.
 3. [Final result](#result)
     1. [Video](#video)
     2. [Screenshots](#images)
-5. [Project installation](#install)
+4. [Project installation](#install)
     1. [Nodejs installation](#node-install)
     2. [Sources code cloning](#cloning)
     3. [Dependencies installation](#dev-install)
