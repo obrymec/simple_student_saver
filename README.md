@@ -1,7 +1,7 @@
 # Simple Student Saver
 ![Full Stack Development](https://img.shields.io/badge/full%20stack%20development-FF5722.svg?style=for-the-badge)
 ![Web Application](https://img.shields.io/badge/web%20application-%233B4D98?style=for-the-badge)
-![User Interface](https://img.shields.io/badge/student%20saver-1997B5.svg?style=for-the-badge)
+![Student Saver](https://img.shields.io/badge/student%20saver-1997B5.svg?style=for-the-badge)
 ![Web Development](https://img.shields.io/badge/PWA-7D4698.svg?style=for-the-badge)
 
 This small project is academic. It was developed with Native Web Development
@@ -31,15 +31,15 @@ uses AJAX and data transfer uses JSON language.
 
 ## Access link <a id = "link"></a>
 The project is already hosted on web and can be
-accessible through one of these links below :<br/>
+accessible through one of these links below :
 - https://simple-student-saver.onrender.com
 
 ## Reference <a id = "ref"></a>
-The project can be found via the link below :<br/>
+The project can be found via the link below :
 - https://gitlab.com/obrymec/simple_student_saver
 
 ## Final result <a id = "result"></a>
-This is the final result of the project :<br/><br/>
+This is the final result of the project :
 ### Video <a id = "video"></a>
 [![Watch the project's video](https://img.youtube.com/vi/6vv_dhTlSUA/maxresdefault.jpg)](https://youtu.be/6vv_dhTlSUA)
 
