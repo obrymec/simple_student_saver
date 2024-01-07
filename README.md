@@ -4,7 +4,7 @@
 ![Student Saver](https://img.shields.io/badge/student%20saver-1997B5.svg?style=for-the-badge)
 ![Pwa](https://img.shields.io/badge/pwa-7D4698.svg?style=for-the-badge)
 
-This small project is academic. It was developed with Native Web Development
+This small project is academic. It has been developed with Native Web Development
 Languages. The main goal of the project is to save a student data inside a
 Database. The project is subdivided in two parts such as: Front-end and
 Back-end. In Front-end, we have two views: register and saved students pages.
@@ -31,7 +31,7 @@ uses AJAX and data transfer uses JSON language.
 
 ## Access link <a id = "link"></a>
 The project is already hosted on web and can be
-accessible through one of these links below :
+accessible through the link below :
 - https://simple-student-saver.onrender.com
 
 ## Reference <a id = "ref"></a>
