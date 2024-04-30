@@ -1,11 +1,11 @@
 /**
-* @project Simple Student Saver - https://simple-student-saver.onrender.com/
+* @project Simple Student Saver - https://simple-student-saver.onrender.com
 * @fileoverview The logic to fetch all logged student(s) from the database.
 * @author Obrymec - obrymecsprinces@gmail.com
 * @supported DESKTOP, MOBILE
 * @created 2021-11-19
-* @updated 2023-11-12
-* @version 1.0.1
+* @updated 2024-04-29
+* @version 1.0.2
 * @file data.js
 */
 
@@ -185,8 +185,7 @@ $ ("svg#back-btn").click (
 		-1, () => (
 			$ ("main.content").load (
 				clearStr (`
-					./front_end/src/features
-					/add_student/sign_up.html
+					./src/features/add_student/sign_up.html
 				`, true)
 			)
 		)

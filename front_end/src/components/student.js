@@ -1,5 +1,5 @@
 /**
-* @project Simple Student Saver - https://simple-student-saver.onrender.com/
+* @project Simple Student Saver - https://simple-student-saver.onrender.com
 * @fileoverview The graphical data viewer of a student.
 * @author Obrymec - obrymecsprinces@gmail.com
 * @supported DESKTOP, MOBILE

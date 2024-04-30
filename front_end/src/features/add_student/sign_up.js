@@ -1,12 +1,12 @@
 /**
-* @project Simple Student Saver - https://simple-student-saver.onrender.com/
+* @project Simple Student Saver - https://simple-student-saver.onrender.com
 * @fileoverview The controller to manage a student sign up process.
 * @author Obrymec - obrymecsprinces@gmail.com
 * @supported DESKTOP, MOBILE
 * @created 2021-11-19
-* @updated 2023-11-12
+* @updated 2024-04-29
 * @file sign_up.js
-* @version 1.0.1
+* @version 1.0.2
 */
 
 // Global attributes.
@@ -582,8 +582,7 @@ $ (options).children ()[0]
 						$ ("main.content")
 							.html ('').load (
 								clearStr (`
-									./front_end/src/features
-									/fetch_students/data.html
+									./src/features/fetch_students/data.html
 								`, true)
 							)
 					)

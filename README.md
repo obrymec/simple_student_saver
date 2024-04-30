@@ -44,8 +44,8 @@ This is the final result of the project :
 [![Watch the project's video](https://img.youtube.com/vi/6vv_dhTlSUA/maxresdefault.jpg)](https://youtu.be/6vv_dhTlSUA)
 
 ### Screenshots <a id = "images"></a>
-![First render](./assets/render/render_1.png)
-![Second render](./assets/render/render_2.png)
+![First render](./front_end/public/assets/render/render_1.png)
+![Second render](./front_end/public/assets/render/render_2.png)
 
 ## Project installation <a id = "install"></a>
 👉 If you want to get project sources code, make sure

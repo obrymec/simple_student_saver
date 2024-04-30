@@ -1,5 +1,5 @@
 /**
-* @project Simple Student Saver - https://simple-student-saver.onrender.com/
+* @project Simple Student Saver - https://simple-student-saver.onrender.com
 * @fileoverview Defines some methods to manage frequent animations.
 * @author Obrymec - obrymecsprinces@gmail.com
 * @supported DESKTOP, MOBILE

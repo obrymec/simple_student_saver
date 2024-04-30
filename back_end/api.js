@@ -1,11 +1,11 @@
 /**
-* @project Simple Student Saver - https://simple-student-saver.onrender.com/
+* @project Simple Student Saver - https://simple-student-saver.onrender.com
 * @fileoverview Provides an API to manage students data inside a database.
 * @author Obrymec - obrymecsprinces@gmail.com
 * @supported DESKTOP, MOBILE
 * @created 2021-11-19
-* @updated 2023-11-12
-* @version 1.0.0
+* @updated 2024-04-30
+* @version 1.0.1
 * @file api.js
 */
 

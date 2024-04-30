@@ -1,6 +1,6 @@
 {
   "description": "A simple student data saver web application.",
-  "start_url": "./front_end/public/index.html",
+  "start_url": "./index.html",
   "orientation": "portrait-primary",
   "name": "Simple Student Saver",
   "short_name": "Student Saver",

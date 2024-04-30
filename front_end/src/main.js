@@ -1,10 +1,10 @@
 /**
-* @project Simple Student Saver - https://simple-student-saver.onrender.com/
+* @project Simple Student Saver - https://simple-student-saver.onrender.com
 * @fileoverview The main application entry point.
 * @author Obrymec - obrymecsprinces@gmail.com
 * @supported DESKTOP, MOBILE
 * @created 2022-10-29
-* @updated 2023-11-12
+* @updated 2024-04-29
 * @version 0.0.2
 * @file main.js
 */
@@ -66,8 +66,7 @@ $ (document).ready (() => {
     // data web page.
     $ ("main.content").load (
       clearStr (`
-        ./front_end/src/features
-        /fetch_students/data.html
+        ./src/features/fetch_students/data.html
       `, true)
     );
   // Otherwise.
@@ -76,8 +75,7 @@ $ (document).ready (() => {
     // web page.
     $ ("main.content").load (
       clearStr (`
-        ./front_end/src/features
-        /add_student/sign_up.html
+        ./src/features/add_student/sign_up.html
       `, true)
     );
   }
