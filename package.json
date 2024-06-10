@@ -1,10 +1,10 @@
 {
 	"homepage": "https://github.com/obrymec/simple_student_saver#readme",
-	"description": "A simple student data saver web application.",
 	"author": "Obrymec - obrymecsprinces@gmail.com",
+	"description": "Student data back up.",
 	"name": "simple-student-saver",
 	"main": "./server.js",
-	"version": "1.0.2",
+	"version": "1.0.3",
 	"license": "MIT",
 	"bugs": {
 		"url": "https://github.com/obrymec/simple_student_saver/issues"

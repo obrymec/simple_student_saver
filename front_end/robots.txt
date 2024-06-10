@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /public/service_worker.js
+Disallow: /public/assets/logos/
+Disallow: /public/style.css
+Disallow: /src/
