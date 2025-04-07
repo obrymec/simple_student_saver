@@ -31,8 +31,9 @@ uses AJAX and data transfer uses JSON language.
 
 ## Access link <a id = "link"></a>
 The project is already hosted on web and can be
-accessible through the link below :
+accessible through one the links below :
 - https://simple-student-saver.onrender.com
+- https://simple-student-saver.glitch.me
 
 ## Reference <a id = "ref"></a>
 The project can be found via the link below :
